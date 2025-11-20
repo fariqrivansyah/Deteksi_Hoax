@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 # Load default model (Logistic pipeline)
 log_pipe = joblib.load("logreg_pipeline.pkl")
+log_pipe = joblib.load("model_hoax_pipeline.pkl")
 
 # Load SVM components if present
 try:
