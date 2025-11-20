@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Deteksi Hoaks</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f3f6fb; padding:30px; }
+    .box { max-width:800px; margin:auto; background:white; padding:20px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.06); }
+    textarea { width:100%; height:180px; padding:10px; font-size:15px; }
+    select, button { padding:10px; font-size:15px; }
+    .result { margin-top:15px; padding:12px; border-radius:6px; }
+    .hoax { background:#ffe6e6; color:#b30000; }
+    .valid { background:#e6ffe6; color:#006600; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Deteksi Hoaks (Demo)</h2>
+    <form method="POST">
+      <label>Masukkan teks berita / postingan:</label><br>
+      <textarea name="text" required>{{ input_text }}</textarea><br><br>
+
+      <label>Pilih model:</label>
+      <select name="model">
+        <option value="logistic" {% if chosen=='logistic' %}selected{% endif %}>Logistic Regression (default)</option>
+        <option value="svm" {% if chosen=='svm' %}selected{% endif %}>SVM (calibrated)</option>
+      </select>
+      <br><br>
+      <button type="submit">Deteksi</button>
+    </form>
+
+    {% if result %}
+      <div class="result {% if result=='HOAX' %}hoax{% else %}valid{% endif %}">
+        <strong>Hasil:</strong> {{ result }}
+        {% if prob is not none %}
+          <div>Probabilitas HOAX: {{ (prob*100)|round(2) }}%</div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
+
